@@ -1,6 +1,5 @@
 package com.practise.demo.dao;
 
-import com.practise.demo.dto.UserDetails;
 import com.practise.demo.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +11,22 @@ import static java.util.Objects.nonNull;
 public class UserDetailsDao {
 
     private Map<String, UserEntity> userDetailsMap = new HashMap();
+
+    /*UsersCRUDRepository usersCRUDRepository;
+
+    @Autowired
+    public UserDetailsDao(UsersCRUDRepository usersCRUDRepository){
+        this.usersCRUDRepository = usersCRUDRepository;
+    }*/
+
+
     public UserEntity getUserById(int id){
         return userDetailsMap.get(id);
     }
 
     public UserEntity createNewUser(UserEntity userEntity) {
         userDetailsMap.put(userEntity.getUserId(),userEntity);
+        //usersCRUDRepository.save(userEntity);
         return userEntity;
     }
 

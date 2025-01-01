@@ -7,10 +7,12 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class UserDetails {
+public class UserDetailsDTO {
     private String userId;
     private String firstName;
     private String lastName;
     private String emailId;
+    private String password;
+    private String userType;
 
 }

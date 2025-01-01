@@ -1,7 +1,7 @@
 package com.practise.demo.controller;
 
-import com.practise.demo.dto.UserDetails;
-import com.practise.demo.service.UserService;
+import com.practise.demo.dto.UserDetailsDTO;
+import com.practise.demo.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.Objects;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UsersServiceImpl userService;
 
     @Autowired
     private Environment environment;
@@ -28,14 +28,14 @@ public class UserController {
     }
 
     @GetMapping
-    public Collection<UserDetails> getAllUsers() {
+    public Collection<UserDetailsDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping(path = "/{userId}",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<UserDetails> getUserById(@PathVariable String userId) {
-        UserDetails userById = userService.getUserById(userId);
+    public ResponseEntity<UserDetailsDTO> getUserById(@PathVariable String userId) {
+        UserDetailsDTO userById = userService.getUserById(userId);
         if (null == userById) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -45,15 +45,15 @@ public class UserController {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public UserDetails createNewUser(@RequestBody UserDetails userDetails) {
+    public UserDetailsDTO createNewUser(@RequestBody UserDetailsDTO userDetails) {
         return userService.createUser(userDetails);
     }
 
     @PutMapping(path ="/{userId}"
             , consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<UserDetails> updateUser(@PathVariable String userId, @RequestBody UserDetails userDetails) {
-        UserDetails updateUser = userService.updateUsers(userDetails, userId);
+    public ResponseEntity<UserDetailsDTO> updateUser(@PathVariable String userId, @RequestBody UserDetailsDTO userDetails) {
+        UserDetailsDTO updateUser = userService.updateUsers(userDetails, userId);
         if(Objects.nonNull(updateUser)){
             return new ResponseEntity<>(updateUser,HttpStatus.OK);
         }else{
